@@ -4,7 +4,15 @@ const multer = require("multer");
 
 const PORT = 8080;
 const app = express();
-// const upload = multer({ dest: "uploads/" });
+const uploads = multer({ dest: "uploads/" });
+
+app.use(cors());
+app.use(express.json());
+app.use("/uploads", express.static("uploads"));
+
+app.post("/fileUpload", uploads.single("image"), function (req, res, next) {
+  res.send(req.file);
+});
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -16,12 +24,5 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
-
-app.use(cors());
-app.use(express.json());
-
-app.post("/fileUpload", upload.single("image"), function (req, res, next) {
-  res.send(req.file);
-});
 
 app.listen(PORT, (error) => console.log("listening"));
