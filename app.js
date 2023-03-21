@@ -8,21 +8,11 @@ const uploads = multer({ dest: "uploads/" });
 
 app.use(cors());
 app.use(express.json());
-app.use("/uploads", express.static("uploads"));
+app.use("/uploads", express.static("8080 uploads"));
 
-app.post("/fileUpload", uploads.single("image"), function (req, res, next) {
-  res.send(req.file);
+app.post("/fileUpload", uploads.single("file"), (req, res) => {
+  console.log("body", req.body);
+  console.log("file", req.file);
 });
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "./uploads");
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.originalname);
-  },
-});
-
-const upload = multer({ storage: storage });
-
-app.listen(PORT, (error) => console.log("listening"));
+app.listen(PORT, () => console.log("listening port 8080"));

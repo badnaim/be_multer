@@ -13,4 +13,4 @@ app.post("/upload", uploader.single("file"), async (req, res) => {
   return res.json({ success: true, file: upload.secure_url });
 });
 
-app.listen(3000);
+app.listen(8080);
